@@ -1,0 +1,1110 @@
+definitions:
+  model.AddressCreateReq:
+    properties:
+      address:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
+  model.AddressUpdateReq:
+    properties:
+      address:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
+  model.CategoryAddReq:
+    properties:
+      category_name:
+        type: string
+    type: object
+  model.ItemInfoAddReq:
+    properties:
+      num:
+        minimum: 1
+        type: integer
+    required:
+    - num
+    type: object
+  model.ItemInfoUpdateReq:
+    properties:
+      num:
+        type: integer
+    required:
+    - num
+    type: object
+  model.OrderCreateReq:
+    properties:
+      address:
+        type: string
+      product_id:
+        type: integer
+      product_num:
+        minimum: 1
+        type: integer
+    required:
+    - address
+    - product_id
+    type: object
+  model.ProductCreateReq:
+    properties:
+      category_id:
+        type: integer
+      discount_price:
+        type: string
+      info:
+        type: string
+      name:
+        type: string
+      num:
+        type: integer
+      on_sale:
+        type: boolean
+      price:
+        type: string
+      title:
+        type: string
+    type: object
+  model.ProductUpdateReq:
+    properties:
+      category_id:
+        type: integer
+      discount_price:
+        type: string
+      info:
+        type: string
+      name:
+        type: string
+      num:
+        type: integer
+      on_sale:
+        type: boolean
+      price:
+        type: string
+      title:
+        type: string
+    type: object
+  model.Response:
+    properties:
+      data: {}
+      msg:
+        type: string
+      status:
+        type: integer
+    type: object
+  model.SkillReq:
+    properties:
+      address_id:
+        type: integer
+    type: object
+  model.UserLoginReq:
+    properties:
+      password:
+        type: string
+      user_name:
+        type: string
+    type: object
+  model.UserRegisterReq:
+    properties:
+      email:
+        type: string
+      nick_name:
+        type: string
+      password:
+        type: string
+      user_name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/addresses:
+    get:
+      description: 地址获取
+      parameters:
+      - description: page number
+        in: query
+        name: offset
+        type: integer
+      - description: page size
+        in: query
+        name: limit
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 地址获取
+      tags:
+      - address
+    post:
+      consumes:
+      - application/json
+      description: 地址创建
+      parameters:
+      - description: 地址信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/model.AddressCreateReq'
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 地址创建
+      tags:
+      - address
+  /api/v1/addresses/{id}:
+    delete:
+      description: 地址删除
+      parameters:
+      - description: address id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 地址删除
+      tags:
+      - address
+    get:
+      consumes:
+      - application/json
+      description: 地址获取
+      parameters:
+      - description: address id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 地址获取
+      tags:
+      - address
+    put:
+      consumes:
+      - application/json
+      description: 地址更新
+      parameters:
+      - description: 地址信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/model.AddressUpdateReq'
+      - description: address id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 地址更新
+      tags:
+      - address
+  /api/v1/carts/{cart_id}:
+    get:
+      description: 购物车信息
+      parameters:
+      - description: cart id
+        in: path
+        name: cart_id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 购物车信息
+      tags:
+      - cart
+  /api/v1/carts/{cart_id}/item-infos/products/{product_id}:
+    post:
+      consumes:
+      - application/json
+      description: 添加购物车商品
+      parameters:
+      - description: 商品数量
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/model.ItemInfoAddReq'
+      - description: cart id
+        in: path
+        name: cart_id
+        required: true
+        type: integer
+      - description: product id
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加购物车商品
+      tags:
+      - item_info
+  /api/v1/carts/item-infos/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除购物车商品
+      parameters:
+      - description: iteminfo id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除购物车商品
+      tags:
+      - item_info
+    get:
+      consumes:
+      - application/json
+      description: 获取购物车商品
+      parameters:
+      - description: iteminfo id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取购物车商品
+      tags:
+      - item_info
+    put:
+      consumes:
+      - application/json
+      description: 更新购物车商品
+      parameters:
+      - description: 商品数量
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/model.ItemInfoUpdateReq'
+      - description: iteminfo id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新购物车商品
+      tags:
+      - item_info
+  /api/v1/categories:
+    get:
+      description: 商品种类
+      parameters:
+      - description: page number
+        in: query
+        name: offset
+        type: integer
+      - description: page size
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 商品种类
+      tags:
+      - category
+    post:
+      consumes:
+      - application/json
+      description: 商品种类创建
+      parameters:
+      - description: 商品种类信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/model.CategoryAddReq'
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 商品种类创建
+      tags:
+      - category
+  /api/v1/categories/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 商品种类删除
+      parameters:
+      - description: category id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 商品种类删除
+      tags:
+      - category
+  /api/v1/orders:
+    get:
+      description: 订单列表（单个用户）
+      parameters:
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 订单列表
+      tags:
+      - order
+    post:
+      consumes:
+      - application/json
+      description: 订单创建
+      parameters:
+      - description: 订单创建信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/model.OrderCreateReq'
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 订单创建
+      tags:
+      - order
+  /api/v1/orders/{order_id}:
+    delete:
+      description: 订单删除
+      parameters:
+      - description: 订单号
+        in: path
+        name: order_id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 订单删除
+      tags:
+      - order
+    get:
+      description: 订单查询
+      parameters:
+      - description: 订单号
+        in: path
+        name: order_id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 订单查询
+      tags:
+      - order
+  /api/v1/orders/{order_id}/payment:
+    post:
+      description: 支付
+      parameters:
+      - description: 订单号
+        in: path
+        name: order_id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 支付
+      tags:
+      - order
+  /api/v1/products:
+    get:
+      description: 商品查找
+      parameters:
+      - description: page number
+        in: query
+        name: offset
+        type: integer
+      - description: page size
+        in: query
+        name: limit
+        type: integer
+      - description: page size
+        in: query
+        name: search_info
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 商品查找
+      tags:
+      - product
+  /api/v1/products-categories/{category_id}:
+    get:
+      description: 商品列表（按种类显示）
+      parameters:
+      - description: category id
+        in: path
+        name: category_id
+        required: true
+        type: integer
+      - description: page number
+        in: query
+        name: offset
+        type: integer
+      - description: page size
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 商品列表
+      tags:
+      - product
+  /api/v1/products/{id}:
+    delete:
+      description: 商品删除
+      parameters:
+      - description: product id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 商品删除
+      tags:
+      - product
+    get:
+      description: 商品显示
+      parameters:
+      - description: product id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 商品显示
+      tags:
+      - product
+    put:
+      consumes:
+      - application/json
+      description: 商品更新
+      parameters:
+      - description: product id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 商品更新信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/model.ProductUpdateReq'
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 商品更新
+      tags:
+      - product
+  /api/v1/products/imgs/{id}:
+    get:
+      description: 商品图片
+      parameters:
+      - description: product id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 商品图片
+      tags:
+      - product
+  /api/v1/skill-goods:
+    get:
+      description: 开启秒杀
+      parameters:
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 开启秒杀
+      tags:
+      - skill
+    post:
+      consumes:
+      - multipart/form-data
+      description: 秒杀商品导入
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 秒杀商品导入
+      tags:
+      - skill
+  /api/v1/skill-goods/{product_id}:
+    post:
+      consumes:
+      - application/json
+      description: 秒杀
+      parameters:
+      - description: product id
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      - description: 秒杀请求信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/model.SkillReq'
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 秒杀
+      tags:
+      - skill
+  /api/v1/user:
+    get:
+      description: 用户登录
+      parameters:
+      - description: access_token
+        in: header
+        name: access_token
+        required: true
+        type: string
+      - description: refresh_token
+        in: header
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 用户登录
+      tags:
+      - user
+  /api/v1/user/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录
+      parameters:
+      - description: 用户登录信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 用户登录
+      tags:
+      - user
+  /api/v1/user/register:
+    post:
+      consumes:
+      - application/json
+      description: 用户注册
+      parameters:
+      - description: 用户注册信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserRegisterReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 用户注册
+      tags:
+      - user
+swagger: "2.0"

@@ -1,0 +1,27 @@
+groups:
+- name: error
+  rules:
+  - alert: cpu usage # 告警规则名称
+    # 触发告警条件
+    expr: ceil((1 - avg(irate(node_cpu_seconds_total{mode="idle"}[5m])) by (instance))*10000)/100 > 80
+    for: 1m # 评估时间
+    labels: # 自定义标签
+      second_type: 'cpu usage'
+      level: 'error'
+    annotations: # 附加描述信息
+      summary: "cpu使用率超过80%"
+      value: '{{ $value }}'
+      description: "服务器：{{ $labels.instance }}，当前cpu使用率：{{ $value }}%"
+
+- name: warn
+  rules:
+  - alert: memory usage
+    expr: ceil((node_memory_MemTotal_bytes -node_memory_MemFree_bytes - node_memory_Buffers_bytes-node_memory_Cached_bytes ) / node_memory_MemTotal_bytes * 10000)/100 > 70
+    for: 1m
+    labels:
+      second_type: 'memory usage'
+      level: 'warn'
+    annotations:
+      summary: "内存使用率超过70%"
+      value: '{{ $value }}'
+      description: "服务器: {{ $labels.instance }}，当前内存使用率：{{ $value }}%"

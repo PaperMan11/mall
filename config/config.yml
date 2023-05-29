@@ -1,0 +1,48 @@
+httpserver:
+  port: 8000
+  model: "dev" # release
+  servicename: "mall"
+  key: "1234566789111111"
+  fill_interval: 5 # 条件令牌的时间间隔（单位秒）
+  cap: 100 # 令牌桶容量
+  
+log:
+  # 控制台日志参数
+  enableConsole: true
+  consoleJSONFormat: true
+  consoleLevel: Debug
+  # 文件日志参数
+  enableFile: true
+  fileJSONFormat: false
+  fileLevel: Debug
+  fileLocation: ./mall.log
+  maxAge: 28 # 最大天数
+  maxSize: 100 # 文件最大容量
+  compress: true # 是否压缩
+
+local_upload:
+  photoHost: "www.ziaing.com"
+  productPhotoPath: "static/product" # 相对路径
+  avatarPath: "static/avatar" # 相对路径
+
+mysql:
+  host: mysql-server
+  port: 3306
+  user: root
+  password: "123456"
+  db: "mall"
+  max_open_conns: 100
+  max_idle_conns: 100
+
+redis:
+  host: redis-server
+  port: 6379
+  password: ""
+  db: 0
+  pool_size: 100
+
+rabbitmq:
+  host: rabbitmq-server
+  port: 5672
+  user: tzq 
+  password: "123456"

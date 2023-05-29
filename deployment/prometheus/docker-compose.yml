@@ -1,0 +1,75 @@
+version: '3.7'
+
+services:
+  prometheus:
+    container_name: my-prometheus
+    build: "."
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    networks:
+      - mall_mall-network  
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: my-alertmanager
+    restart: unless-stopped
+    ports:
+      - 9093:9093
+    # volumes:
+    #   - "./alert/alertmanager.yml:/etc/alertmanager/alertmanager.yml"
+    networks:
+      - mall_mall-network  
+  
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: my-cadvisor
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    networks:
+      - mall_mall-network  
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: my-node-exporter
+    restart: unless-stopped
+    ports:
+      - '9100:9100'
+    networks:
+      - mall_mall-network  
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--collector.textfile.directory=/node_exporter/prom'
+    volumes:
+      - /proc:/host/proc
+      - /sys:/host/sys
+      - /:/rootfs
+      - ./etc/node_exporter/prom:/node_exporter/prom
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: my-grafana
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    networks:
+      - mall_mall-network  
+    user: '0'
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=123456
+      - GF_USERS_ALLOW_SIGN_UP=false
+
+
+networks:
+    mall_mall-network:
+      external: true
